@@ -1,0 +1,42 @@
+<?php
+
+include_once("clasePasajero.php");
+
+class PasajeroVIP extends Pasajero{
+  
+  private $numViajero;
+  private $cantMillas;
+  
+  public function __construct ($nombreP, $apellidoP, $numeroDocP, $telefonoP, $numViajero, $cantMillas){
+    parent::__construct($nombreP, $apellidoP, $numeroDocP, $telefonoP);
+    $this -> numViajero = $numViajero;
+    $this -> cantMillas = $cantMillas;
+  }
+
+/*Setter de $numViajero*/
+  public function setNumViajero($numViajero){
+    $this -> numViajero = $numViajero;
+  }
+
+/*Getter de $numViajero*/
+  public function getNumViajero(){
+    return $this -> numViajero;
+  }
+
+/*Setter de $cantMillas*/
+  public function setCantMillas($cantMillas){
+    $this -> cantMillas = $cantMillas;
+  }
+
+/*Getter de $cantMillas*/
+  public function getCantMillas(){
+    return $this -> cantMillas;
+  }
+
+  public function __toString(){
+    $cadena = parent::__toString();
+    $cadena = $cadena.", viajero frecuente N° ".$this -> getNumViajero().", cantidad de millas: ".$this -> getCantMillas()."\n";
+  }
+
+}
+
