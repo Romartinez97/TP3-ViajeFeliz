@@ -36,6 +36,7 @@ class PasajeroVIP extends Pasajero{
   public function __toString(){
     $cadena = parent::__toString();
     $cadena = $cadena.", viajero frecuente N° ".$this -> getNumViajero().", cantidad de millas: ".$this -> getCantMillas()."\n";
+    return $cadena;
   }
 
 }
