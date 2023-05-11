@@ -1,0 +1,54 @@
+<?php
+
+include_once("clasePasajero.php");
+
+class PasajeroEspecial extends Pasajero{
+
+  private $sillaRuedas;
+  private $asistencia;
+  private $alimentos;
+  
+  public function __construct ($nombreP, $apellidoP, $numeroDocP, $telefonoP, $sillaRuedas, $asistencia, $alimentos){
+    parent::__construct($nombreP, $apellidoP, $numeroDocP, $telefonoP);
+    $this -> sillaRuedas = $sillaRuedas;
+    $this -> asistencia = $asistencia;
+    $this -> alimentos = $alimentos;
+  }
+  
+  /*Setter de $sillaRuedas*/
+  public function setSillaRuedas($sillaRuedas){
+    $this -> sillaRuedas = $sillaRuedas;
+  }
+  
+  /*Getter de $sillaRuedas*/
+  public function getSillaRuedas(){
+    return $this -> sillaRuedas;
+  }
+  
+  /*Setter de $asistencia*/
+  public function setAsistencia($asistencia){
+    $this -> asistencia = $asistencia;
+  }
+  
+  /*Getter de $asistencia*/
+  public function getAsistencia(){
+    return $this -> asistencia;
+  }
+  
+  /*Setter de $alimentos*/
+  public function setAlimentos($alimentos){
+    $this -> alimentos = $alimentos;
+  }
+  
+  /*Getter de $alimentos*/
+  public function getAlimentos(){
+    return $this -> alimentos;
+  }
+  
+  public function __toString(){
+    $cadena = parent::__toString;
+    $cadena = $cadena."\nSilla de ruedas: ".$this->getSillaRuedas."\nAsistencia: ".$this->getAsistencia. "\nComida especial: ".$this->getAlimentos."\n";
+    return $cadena;
+  }
+  
+}
