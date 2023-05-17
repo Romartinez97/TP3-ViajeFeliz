@@ -38,6 +38,16 @@ class PasajeroVIP extends Pasajero{
     $cadena = $cadena.", viajero frecuente N° ".$this -> getNumViajero().", cantidad de millas: ".$this -> getCantMillas()."\n";
     return $cadena;
   }
+    
+  public function darPorcentajeIncremento(){
+    $cantMillas = $this -> getCantMillas();
+    if ($cantMillas > 300){
+      $porcIncremento = 30;
+    } else {
+      $porcIncremento = 35;
+    }
+    return $porcIncremento;
+  }
 
 }
 
