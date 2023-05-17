@@ -51,4 +51,28 @@ class PasajeroEspecial extends Pasajero{
     return $cadena;
   }
   
+  public function cantidadNecesidades(){
+    $cantNecesidades = 0;
+    if ($this->getSillaRuedas() == true){
+      $cantNecesidades++;
+    }
+    if ($this->getAsistencia() == true){
+      $cantNecesidades++;
+    }
+    if ($this->getAlimentos() == true){
+      $cantNecesidades++;
+    }
+    return $cantNecesidades;
+  }
+  
+  public function darPorcentajeIncremento(){
+    $cantNecesidades = $this -> cantidadNecesidades();
+    if ($cantNecesidades > 1){
+      $porcIncremento = 30;
+    } else {
+      $porcIncremento = 15;
+    }
+    return $porcIncremento;
+  }
+  
 }
