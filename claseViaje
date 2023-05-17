@@ -1,6 +1,9 @@
 <?php
 
 include_once("clasePasajero.php");
+include_once("clasePasajeroComun.php");
+include_once("clasePasajeroVIP.php");
+include_once("clasePasajeroEspecial.php");
 include_once("claseResponsableV.php");
 
 class Viaje
@@ -10,13 +13,17 @@ class Viaje
   private $maxPasajeros;
   private $listaPasajeros;
   private $responsableViaje;
+  private $costoViaje;
+  private $totalCostos;
 
-  public function __construct($codigoViaje, $destinoViaje, $maxPasajerosViaje, $listaPasajerosViaje, $responsableViaje)
+  public function __construct($codigoViaje, $destinoViaje, $maxPasajerosViaje, $listaPasajerosViaje, $responsableViaje, $costoViaje, $totalCostos)
   {
     $this->codigo = $codigoViaje;
     $this->destino = $destinoViaje;
     $this->maxPasajeros = $maxPasajerosViaje;
     $this->listaPasajeros = $listaPasajerosViaje;
+    $this ->costoViaje = $costoViaje;
+    $this ->totalCostos = $totalCostos;
   }
   
   /*
@@ -98,7 +105,79 @@ class Viaje
     return $this->responsableViaje;
   }
   
+  /*
+  * Función de seteo de la variable $costoViaje
+  */
+  public function setCostoViaje($costoViaje)
+  {
+    $this->costoViaje = $costoViaje;
+  }
+  
+  /*
+  * Función para retornar la variable $costoViaje
+  */
+  public function getCostoViaje()
+  {
+    return $this->costoViaje;
+  }
+  
+  /*
+  * Función de seteo de la variable $totalCostos
+  */
+  public function setTotalCostos($totalCostos)
+  {
+    $this->totalCostos = $totalCostos;
+  }
+  
+  /*
+  * Función para retornar la variable $totalCostos
+  */
+  public function getTotalCostos()
+  {
+    return $this->totalCostos;
+  }
+  
   public function __toString(){
     return "\nVuelo N° ".$this->getCodigo().", con destino a ".$this->getDestino().", con ".count($this->getListaPasajeros())."/".$this->getMaxPasajeros()." pasajeros registrados.\n".$this->getResponsableViaje();
   }
+  
+	/**
+	* Función que retorna verdadero si la cantidad de pasajeros del viaje es menor a la cantidad máxima de pasajeros y falso en caso contrario
+	* @return bool
+	*/
+  public function hayPasajesDisponibles(){
+		$hayPasajes = true;
+		$listaPasajeros = $this->getListaPasajeros();
+		$cantPasajeros = count($listaPasajeros);
+		$maxPasajeros = $this->getMaxPasajeros();
+		if ($cantPasajeros > $maxPasajeros){
+			$hayPasajes = false;
+		}
+  	return $hayPasajes;
+  }
+  
+	/**
+	* Función que incorpora al pasajero a la colección (si es posible), actualiza los costos abonados y retorna el costo final que debe abonar el pasajero
+	* @param object $objPasajero
+	* @return int/bool
+	*/
+  public function venderPasaje($objPasajero){
+		$hayPasajes = $this -> hayPasajesDisponibles();
+		$listaPasajeros = $this -> getListaPasajeros();
+		$costoViaje = $this -> getCostoViaje();
+		$costoConAumento = 0;
+		$totalCostos = $this -> getTotalCostos();
+		if ($hayPasajes){
+			array_push($listaPasajeros, $objPasajero);
+			$this -> setListaPasajeros($listaPasajeros);
+			$porcAumento = $objPasajero -> darPorcentajeIncremento();
+			$costoConAumento = $costoViaje + ($costoViaje*$porcAumento/100);
+			$totalCostos = $totalCostos + $costoConAumento;
+			$this -> setTotalCostos($totalCostos);
+			return $totalCostos;
+		} else {
+			return "\nNo hay pasajes disponibles";
+		}	
+  }
+  
 }
