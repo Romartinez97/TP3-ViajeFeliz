@@ -17,20 +17,20 @@ function iniciarListaViajes()
   // Viaje 1
   $responsable1 = new ResponsableV ("Maria", "Fernandez", "035789", "3546548");
   $listadoPasajeros = [];
-  $pasajero1 = new Pasajero ("Juan", "Perez", "23456789", "2995123456");
+  $pasajero1 = new Pasajero ("Juan", "Perez", "23456789", "2995123456", "13", "032464");
   array_push ($listadoPasajeros, $pasajero1);
-  $pasajero2 = new Pasajero ("Carlos", "Lopez", "12345678", "2995456789");
+  $pasajero2 = new PasajeroEspecial ("Carlos", "Lopez", "12345678", "2995456789", "5", "032465", true, false, false);
   array_push ($listadoPasajeros, $pasajero2);
-  $viaje1 = new Viaje ("1001", "Buenos Aires", "30", $listadoPasajeros, $responsable1);
+  $viaje1 = new Viaje ("1001", "Buenos Aires", "30", $listadoPasajeros, $responsable1, "10000", "26000");
   
   // Viaje 2
   $responsable2 = new ResponsableV ("Julio", "Gomez", "478659", "2678450");
   $listadoPasajeros = [];
-  $pasajero3 = new Pasajero ("Pedro", "Gonzalez", "45678123", "2995316487");
+  $pasajero3 = new Pasajero ("Pedro", "Gonzalez", "45678123", "2995316487","10", "032467");
   array_push($listadoPasajeros, $pasajero3);
-  $pasajero4 = new Pasajero ("Marta", "Diaz", "34156789", "2995486179");
+  $pasajero4 = new PasajeroVIP ("Marta", "Diaz", "34156789", "2995486179", "2", "032468", "112", "500");
   array_push($listadoPasajeros, $pasajero4);
-  $viaje2 = new Viaje ("1002", "Catamarca", "25", $listadoPasajeros, $responsable2);
+  $viaje2 = new Viaje ("1002", "Catamarca", "25", $listadoPasajeros, $responsable2, "8000", "19200");
   
   $listadoViajes = [$viaje1, $viaje2];
   return $listadoViajes;  
@@ -88,9 +88,9 @@ function esString()
   $palabra = trim(fgets(STDIN));
     echo "\nEl dato requerido debe estar compuesto solo por letras: ";
     $palabra = trim(fgets(STDIN));
+    return $palabra;
   }
-  return $palabra;
-}
+
 
 /**
  * Función para verificar si un viaje ya existe. Si existe, retorna su posición en el array $listadoViajes.
