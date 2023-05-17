@@ -174,10 +174,8 @@ class Viaje
 			$costoConAumento = $costoViaje + ($costoViaje*$porcAumento/100);
 			$totalCostos = $totalCostos + $costoConAumento;
 			$this -> setTotalCostos($totalCostos);
-			return $totalCostos;
-		} else {
-			return "\nNo hay pasajes disponibles";
-		}	
-  }
+		}
+                return $costoConAumento;
+  }	
   
 }
