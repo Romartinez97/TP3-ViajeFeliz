@@ -147,6 +147,7 @@ class Viaje
 	*/
   public function hayPasajesDisponibles(){
 		$hayPasajes = true;
+    $listaPasajeros = [];
     $listaPasajeros = $this->getListaPasajeros();
 		$cantPasajeros = count($listaPasajeros);
 		$maxPasajeros = $this->getMaxPasajeros();

@@ -40,6 +40,7 @@ class PasajeroVIP extends Pasajero{
   }
     
   public function darPorcentajeIncremento(){
+    $cantMillas=0;
     $cantMillas = $this -> getCantMillas();
     if ($cantMillas > 300){
       $porcIncremento = 30;
