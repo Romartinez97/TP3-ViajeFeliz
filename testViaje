@@ -2,6 +2,9 @@
 
 include_once("claseViaje.php");
 include_once("clasePasajero.php");
+include_once("clasePasajeroComun.php");
+include_once("clasePasajeroVIP.php");
+include_once("clasePasajeroEspecial.php");
 include_once("claseResponsableV.php");
 include_once("funciones.php");
 
@@ -26,6 +29,8 @@ do {
       $destinoViaje = esString();
       echo "\nIngrese la cantidad máxima de pasajeros permitidos: ";
       $maxPasajerosViaje = esNumero();
+      echo "\nIngrese el costo del pasaje del viaje: ";
+      $costoViaje = esNumero();
       echo "\nDatos del responsable del viaje:";
       echo "\nNombre: ";
       $nombreR = esString();
@@ -38,7 +43,8 @@ do {
       $responsableV = new ResponsableV($nombreR, $apellidoR, $numEmpleadoR, $numLicenciaR);
       echo $responsableV;
       $listadoPasajeros = [];
-      $viaje = new Viaje($codigoViaje, $destinoViaje, $maxPasajerosViaje, $listadoPasajeros, $responsableV);
+      $totalCostos = 0;
+      $viaje = new Viaje($codigoViaje, $destinoViaje, $maxPasajerosViaje, $listadoPasajeros, $responsableV, $costoViaje, $totalCostos);
       echo $viaje;
       echo "\n¿Desea ingresar los datos de un pasajero? (S/N) ";
       $respuesta = trim(fgets(STDIN));
@@ -69,14 +75,62 @@ do {
             for ($i = 0; $i < count($listadoPasajeros); $i++) {
               if ($numeroDocP == $listadoPasajeros[$i]->getNumeroDoc()) {
                 echo "\nYa se encuentra registrado un pasajero con el DNI " . $numeroDocP . ", intente nuevamente.";
-
                 $pasajeroRepetido = true;
               }
 
             }
+            echo "\nIngrese el número de asiento: ";
+            $numAsiento = trim(fgets(STDIN));
+            echo "\nIngrese el número de ticket: ";
+            $numticket = trim(fgets(STDIN));
+            echo "\nSeleccione el tipo de pasajero:";
+      echo "\n 1) Pasajero estándar";
+      echo "\n 2) Pasajero VIP";
+      echo "\n 3) Pasajero con necesidades especiales";
+      echo "\nIngrese una opción: ";
+      $tipoPasajero = trim(fgets(STDIN));
+      
+      switch ($tipoPasajero){
+        case 1:
+          $pasajero = new Pasajero($nombre, $apellido, $numeroDoc, $numTelefono, $numAsiento, $numTicket);
+          break;
+        case 2:
+          echo "Ingrese el número de viajero frecuente: ";
+          $numViajero = trim(fgets(STDIN));
+          echo "Ingrese la cantidad de millas del pasajero: ";
+          $numMillas = trim(fgets(STDIN));
+          $pasajero = new PasajeroVIP($nombre, $apellido, $numeroDoc, $numTelefono, $numAsiento, $numTicket, $numViajero, $numMillas);
+          break;
+        case 3:
+          echo "¿Requiere silla de ruedas? (S/N): ";
+          $opcion = trim(fgets(STDIN));
+          $opcion = strtolower($opcion);
+          if ($opcion == "s"){
+            $sillaRuedas = true;
+          } else {
+            $sillaRuedas = false;
+          }
+          echo "¿Requiere asistencia para el embarque? (S/N): ";
+          $opcion = trim(fgets(STDIN));
+          $opcion = strtolower($opcion);
+          if ($opcion == "s"){
+            $asistencia = true;
+          } else {
+            $asistencia = false;
+          }
+          echo "¿Requiere comida especial? (S/N): ";
+          $opcion = trim(fgets(STDIN));
+          $opcion = strtolower($opcion);
+          if ($opcion == "s"){
+            $comida = true;
+          } else {
+            $comida = false;
+          }
+          $pasajero = new PasajeroNecesidadesEspeciales($nombre, $apellido, $numeroDoc, $numTelefono, $numAsiento, $numTicket, $sillaRuedas, $asistencia, $alimentos);
+          break;
+       }
           } while ($pasajeroRepetido);
         }
-        $pasajero = new Pasajero($nombreP, $apellidoP, $numeroDocP, $telefonoP);
         echo $pasajero;
         array_push($listadoPasajeros, $pasajero);    
         echo "\n¿Desea ingresar los datos de otro pasajero? (S/N): ";
@@ -230,12 +284,12 @@ do {
         $codigoViaje = esNumero();
       }
       echo $listadoViajes[$posicionActual];
-      /*
+      
       echo "\nCódigo del viaje: " . $listadoViajes[$posicionActual]->getCodigo();
       echo "\nDestino del viaje: " . $listadoViajes[$posicionActual]->getDestino();
       echo "\nCantidad máxima de pasajeros en el viaje: " . $listadoViajes[$posicionActual]->getMaxPasajeros();
       echo "\nCantidad de pasajeros registrados en el viaje: " . count($listadoViajes[$posicionActual]->getListaPasajeros());
-      */
+      
       echo "\n¿Desea ver el registro de todos los pasajeros registrados en el viaje? (S/N): ";
       $respuesta = trim(fgets(STDIN));
       $respuesta = strtolower($respuesta);
@@ -246,5 +300,72 @@ do {
         }
       }
       break;
+    case 4:
+      //Registrar una venta.
+      
+      echo "\nIngrese el nombre del pasajero: "; 
+      $nombre = trimf(fgets(STDIN));
+      echo "\nIngrese el apellido del pasajero: ";
+      $apellido = trimf(fgets(STDIN));
+      echo "\nIngrese el npumero de documento del pasajero: ";
+      $numeroDoc = trimf(fgets(STDIN));
+      echo "\nIngrese el número de teléfono del pasajero: ";
+      $numTelefono = trimf(fgets(STDIN));
+      echo "\nIngrese el número de asiento del pasajero: ";
+      $numAsiento = trimf(fgets(STDIN));
+      echo "\nIngrese el número de ticket del pasajero: ";
+      $numTicket = trimf(fgets(STDIN));
+      echo "\nSeleccione el tipo de pasajero:";
+      echo "\n 1) Pasajero estándar";
+      echo "\n 2) Pasajero VIP";
+      echo "\n 3) Pasajero con necesidades especiales";
+      echo "\nIngrese una opción: ";
+      $tipoPasajero = trim(fgets(STDIN));
+      
+      switch ($tipoPasajero){
+        case 1:
+          $pasajero = new Pasajero($nombre, $apellido, $numeroDoc, $numTelefono, $numAsiento, $numTicket);
+          break;
+        case 2:
+          echo "Ingrese el número de viajero frecuente: ";
+          $numViajero = trim(fgets(STDIN));
+          echo "Ingrese la cantidad de millas del pasajero: ";
+          $numMillas = trim(fgets(STDIN));
+          $pasajero = new PasajeroVIP($nombre, $apellido, $numeroDoc, $numTelefono, $numAsiento, $numTicket, $numViajero, $numMillas);
+          break;
+        case 3:
+          echo "¿Requiere silla de ruedas? (S/N): ";
+          $opcion = trim(fgets(STDIN));
+          $opcion = strtolower($opcion);
+          if ($opcion == "s"){
+            $sillaRuedas = true;
+          } else {
+            $sillaRuedas = false;
+          }
+          echo "¿Requiere asistencia para el embarque? (S/N): ";
+          $opcion = trim(fgets(STDIN));
+          $opcion = strtolower($opcion);
+          if ($opcion == "s"){
+            $asistencia = true;
+          } else {
+            $asistencia = false;
+          }
+          echo "¿Requiere comida especial? (S/N): ";
+          $opcion = trim(fgets(STDIN));
+          $opcion = strtolower($opcion);
+          if ($opcion == "s"){
+            $comida = true;
+          } else {
+            $comida = false;
+          }
+          $pasajero = new PasajeroNecesidadesEspeciales($nombre, $apellido, $numeroDoc, $numTelefono, $numAsiento, $numTicket, $sillaRuedas, $asistencia, $alimentos);
+          break;
+       }
+        $costoPasaje = $viaje -> venderPasaje($pasajero);
+        if ($costoPasaje > 0){
+          echo "\nSe vendió correctamente el pasaje, el mismo tiene un costo de $".$costoPasaje;
+        } else {
+          echo "\nNo se pudo vender el pasaje ya que no hay disponibles";
+        }
   }
-} while ($opcion != 4);
+} while ($opcion != 5);
