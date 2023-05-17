@@ -1,0 +1,11 @@
+<?php
+
+include_once("clasePasajero.php");
+
+class PasajeroEspecial extends Pasajero{
+  
+  public function darPorcentajeIncremento(){
+  return 10;
+  }
+  
+}
