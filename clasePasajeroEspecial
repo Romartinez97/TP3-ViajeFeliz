@@ -8,8 +8,8 @@ class PasajeroEspecial extends Pasajero{
   private $asistencia;
   private $alimentos;
   
-  public function __construct ($nombreP, $apellidoP, $numeroDocP, $telefonoP, $sillaRuedas, $asistencia, $alimentos){
-    parent::__construct($nombreP, $apellidoP, $numeroDocP, $telefonoP);
+  public function __construct ($nombreP, $apellidoP, $numeroDocP, $telefonoP, $numAsiento, $numTicket $sillaRuedas, $asistencia, $alimentos){
+    parent::__construct($nombreP, $apellidoP, $numeroDocP, $telefonoP, $numAsiento, $numTicket);
     $this -> sillaRuedas = $sillaRuedas;
     $this -> asistencia = $asistencia;
     $this -> alimentos = $alimentos;
