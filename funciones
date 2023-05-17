@@ -47,14 +47,15 @@ function seleccionarOpcion()
   echo "\n   1) Cargar información de un viaje.";
   echo "\n   2) Modificar información de un viaje.";
   echo "\n   3) Ver información de un viaje.";
-  echo "\n   4) Salir.";
+  echo "\n   4) Registrar una venta.";
+  echo "\n   5) Salir.";
   do {
-    echo "\nIngrese un número del 1 al 4 para elegir la opción: ";
+    echo "\nIngrese un número del 1 al 5 para elegir la opción: ";
     $opcion = trim(fgets(STDIN));
-    if ($opcion <= 0 || $opcion > 4) {
+    if ($opcion <= 0 || $opcion > 5) {
       echo "\nPor favor, ingrese un número valido.\n";
     }
-  } while ($opcion <= 0 || $opcion > 4);
+  } while ($opcion <= 0 || $opcion > 5);
 
   return $opcion;
 }
